@@ -1,176 +1,795 @@
 /* =========================
-   Style global - ShrekAI
+   Style global - ShrekAI 🧅
+   iOS 26 Dark Mode Edition
 ========================= */
+
+:root {
+  /* Couleurs Shrek Dark Mode */
+  --shrek-primary: #87a96b;
+  --shrek-secondary: #5a7c3e;
+  --shrek-accent: #a8c98a;
+  --shrek-glow: rgba(135, 169, 107, 0.4);
+  
+  /* Fond avec transparence */
+  --bg-dark: #0a0f0a;
+  --bg-gradient-1: #121812;
+  --bg-gradient-2: #1a241a;
+  
+  /* Surfaces glassmorphism */
+  --surface-glass: rgba(30, 40, 30, 0.6);
+  --surface-glass-hover: rgba(30, 40, 30, 0.75);
+  --surface-border: rgba(135, 169, 107, 0.2);
+  
+  /* Texte */
+  --text-primary: #e8f4e8;
+  --text-secondary: #a8c9a8;
+  --text-dim: #6a8a6a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-    font-family: 'Comic Sans MS', Arial, sans-serif; /* pour un style fun */
-    background-color: #e6f5e6; /* vert pastel doux */
-    color: #2d2d2d;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  background: 
+    radial-gradient(ellipse at top, var(--bg-gradient-1) 0%, var(--bg-dark) 50%),
+    radial-gradient(ellipse at bottom, var(--bg-gradient-2) 0%, var(--bg-dark) 50%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Animation de fond subtile */
+@keyframes bgPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, var(--shrek-glow) 0%, transparent 50%);
+  opacity: 0.1;
+  animation: bgPulse 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* =========================
    Conteneur du chat
 ========================= */
 .chat-container {
-    width: 80%;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background: linear-gradient(145deg, #a8e6a1, #d0f0c0); /* vert funky */
-    border: 2px solid #4caf50;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  width: 90%;
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 0;
+  background: var(--surface-glass);
+  backdrop-filter: blur(60px) saturate(180%);
+  -webkit-backdrop-filter: blur(60px) saturate(180%);
+  border: 1px solid var(--surface-border);
+  border-radius: 32px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 80px rgba(135, 169, 107, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  animation: containerEntry 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 1;
+}
+
+@keyframes containerEntry {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Effet de lueur animé autour du container */
+.chat-container::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 32px;
+  padding: 2px;
+  background: linear-gradient(135deg, 
+    var(--shrek-primary), 
+    transparent, 
+    var(--shrek-accent), 
+    transparent,
+    var(--shrek-primary));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  animation: borderGlow 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes borderGlow {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
 }
 
 /* =========================
-   Formulaire
+   En-tête avec émojis 🧅
+========================= */
+.chat-header {
+  padding: 28px 32px;
+  background: linear-gradient(135deg, 
+    rgba(135, 169, 107, 0.15) 0%, 
+    rgba(90, 124, 62, 0.1) 100%);
+  border-bottom: 1px solid var(--surface-border);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Particules animées en fond */
+.chat-header::before {
+  content: '🧅';
+  position: absolute;
+  font-size: 120px;
+  opacity: 0.03;
+  top: -30px;
+  right: -20px;
+  animation: floatEmoji 6s ease-in-out infinite;
+}
+
+@keyframes floatEmoji {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+h1 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, 
+    var(--shrek-accent) 0%, 
+    var(--shrek-primary) 50%,
+    var(--shrek-accent) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease infinite;
+  position: relative;
+  display: inline-block;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+/* Animation des émojis dans le titre */
+h1::after {
+  content: '🧅✨';
+  position: absolute;
+  right: -70px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28px;
+  animation: emojiPulse 2s ease-in-out infinite;
+}
+
+@keyframes emojiPulse {
+  0%, 100% {
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.15);
+  }
+}
+
+/* =========================
+   Zone des messages
+========================= */
+#chat-messages {
+  padding: 24px 32px;
+  max-height: 500px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  position: relative;
+}
+
+/* Scrollbar ultra-moderne */
+#chat-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+#chat-messages::-webkit-scrollbar-track {
+  background: rgba(135, 169, 107, 0.05);
+  border-radius: 10px;
+  margin: 8px 0;
+}
+
+#chat-messages::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--shrek-primary), var(--shrek-secondary));
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: all 0.3s ease;
+}
+
+#chat-messages::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--shrek-accent), var(--shrek-primary));
+  border-width: 1px;
+}
+
+.message {
+  margin-bottom: 16px;
+  padding: 16px 20px;
+  border-radius: 22px;
+  font-size: 15px;
+  max-width: 75%;
+  animation: messageSlide 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  line-height: 1.5;
+  font-weight: 400;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes messageSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.message:hover {
+  transform: scale(1.02);
+}
+
+.user-message {
+  background: linear-gradient(135deg, 
+    var(--shrek-primary) 0%, 
+    var(--shrek-secondary) 100%);
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 8px;
+  box-shadow: 
+    0 8px 24px rgba(135, 169, 107, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  animation: messageSlideRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes messageSlideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(30px) translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+  }
+}
+
+.assistant-message {
+  background: var(--surface-glass);
+  backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  margin-right: auto;
+  border: 1px solid var(--surface-border);
+  border-bottom-left-radius: 8px;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(135, 169, 107, 0.1) inset;
+  animation: messageSlideLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes messageSlideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px) translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+  }
+}
+
+/* Messages système */
+.système-message {
+  background: rgba(135, 169, 107, 0.15);
+  backdrop-filter: blur(20px);
+  color: var(--shrek-accent);
+  margin: 0 auto;
+  text-align: center;
+  border: 1px solid var(--surface-border);
+  max-width: 90%;
+  font-style: italic;
+}
+
+/* Effet de typing indicator */
+.assistant-message.typing::after {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 16px;
+  background: var(--shrek-primary);
+  margin-left: 4px;
+  animation: blink 1s infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* =========================
+   Formulaire style iOS 26
 ========================= */
 #chat-form {
-    display: flex;
-    margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  padding: 24px 32px 32px;
+  background: var(--surface-glass);
+  backdrop-filter: blur(40px);
+  border-top: 1px solid var(--surface-border);
+  position: relative;
+}
+
+#chat-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--shrek-primary), 
+    transparent);
+  opacity: 0.3;
 }
 
 #user-input {
-    flex-grow: 1;
-    padding: 12px;
-    border: 2px solid #4caf50;
-    border-radius: 8px;
-    margin-right: 10px;
-    font-size: 16px;
-    background-color: #f0fff0;
+  flex-grow: 1;
+  padding: 16px 22px;
+  border: 1.5px solid var(--surface-border);
+  border-radius: 24px;
+  font-size: 16px;
+  background: rgba(20, 30, 20, 0.4);
+  backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  outline: none;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-family: inherit;
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
+#user-input:focus {
+  border-color: var(--shrek-primary);
+  background: rgba(20, 30, 20, 0.6);
+  box-shadow: 
+    0 0 0 4px rgba(135, 169, 107, 0.15),
+    0 8px 24px rgba(135, 169, 107, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+#user-input::placeholder {
+  color: var(--text-dim);
+  opacity: 0.6;
+}
+
+/* =========================
+   Bouton Envoyer Ultra-Moderne iOS 26
+========================= */
 #bouton {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.2s ease;
+  background: linear-gradient(135deg, 
+    var(--shrek-primary) 0%, 
+    var(--shrek-secondary) 100%);
+  color: white;
+  border: none;
+  padding: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 
+    0 8px 24px rgba(135, 169, 107, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Icône de flèche (SVG en pseudo-élément) */
+#bouton::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 2L11 13'/%3E%3Cpath d='M22 2L15 22L11 13L2 9L22 2z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 2;
+}
+
+/* Effet de brillance au survol */
+#bouton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.4), 
+    transparent);
+  transition: left 0.6s ease;
+  z-index: 1;
+}
+
+#bouton:hover::before {
+  left: 100%;
 }
 
 #bouton:hover {
-    background-color: #388e3c;
-    transform: scale(1.05);
+  transform: scale(1.1);
+  box-shadow: 
+    0 12px 32px rgba(135, 169, 107, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+    0 0 30px rgba(135, 169, 107, 0.5);
+}
+
+#bouton:hover::after {
+  transform: translate(2px, -2px) scale(1.1);
+}
+
+#bouton:active {
+  transform: scale(0.95);
+  box-shadow: 
+    0 4px 16px rgba(135, 169, 107, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+#bouton:active::after {
+  transform: translate(4px, -4px);
+}
+
+/* Animation de pulsation quand prêt à envoyer */
+@keyframes buttonReadyPulse {
+  0%, 100% {
+    box-shadow: 
+      0 8px 24px rgba(135, 169, 107, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  }
+  50% {
+    box-shadow: 
+      0 8px 24px rgba(135, 169, 107, 0.6),
+      0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+      0 0 0 4px rgba(135, 169, 107, 0.2);
+  }
+}
+
+/* Ajoute cette classe via JS quand l'input a du texte */
+#bouton.ready {
+  animation: buttonReadyPulse 2s ease-in-out infinite;
+}
+
+/* État désactivé (optionnel) */
+#bouton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: scale(1);
+  box-shadow: 0 4px 12px rgba(135, 169, 107, 0.2);
+}
+
+#bouton:disabled:hover {
+  transform: scale(1);
+  box-shadow: 0 4px 12px rgba(135, 169, 107, 0.2);
 }
 
 /* =========================
-   Bouton reset
+   Bouton reset avec émoji
 ========================= */
 .reset-button {
-    background-color: #66bb6a;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-bottom: 15px;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    align-self: flex-start;
+  background: rgba(135, 169, 107, 0.1);
+  backdrop-filter: blur(20px);
+  color: var(--shrek-accent);
+  border: 1.5px solid var(--surface-border);
+  padding: 12px 24px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 24px 32px 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-family: inherit;
+  letter-spacing: -0.2px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.reset-button::before {
+  content: '🔄 ';
+  font-size: 16px;
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .reset-button:hover {
-    background-color: #43a047;
-    transform: translateY(-2px);
+  background: rgba(135, 169, 107, 0.2);
+  border-color: var(--shrek-primary);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 24px rgba(135, 169, 107, 0.2),
+    0 0 0 1px rgba(135, 169, 107, 0.1) inset;
+}
+
+.reset-button:hover::before {
+  transform: rotate(180deg);
+}
+
+.reset-button:active {
+  transform: scale(0.96) translateY(0);
+  box-shadow: 0 4px 12px rgba(135, 169, 107, 0.15);
 }
 
 /* =========================
-   Loader
+   Loader animé
 ========================= */
 #loader {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px 0;
-    color: #388e3c;
-    font-style: italic;
-    font-size: 14px;
-    margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0;
+  color: var(--shrek-accent);
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 10px;
+  animation: loaderFade 0.4s ease;
+}
+
+.loader-hidden {
+  display: none !important;
+}
+
+@keyframes loaderFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .spinner {
-    width: 24px;
-    height: 24px;
-    border: 3px solid rgba(0, 0, 0, 0.1);
-    border-left-color: #4caf50;
-    border-radius: 50%;
-    animation: spinAnimation 0.8s linear infinite;
-    margin-right: 10px;
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(135, 169, 107, 0.2);
+  border-left-color: var(--shrek-primary);
+  border-top-color: var(--shrek-accent);
+  border-radius: 50%;
+  animation: spinAnimation 0.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  margin-right: 12px;
+  position: relative;
+}
+
+/* Double spinner pour effet avancé */
+.spinner::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 2px solid transparent;
+  border-right-color: var(--shrek-accent);
+  border-radius: 50%;
+  animation: spinAnimation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite reverse;
 }
 
 @keyframes spinAnimation {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* =========================
    Responsivité
 ========================= */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 28px;
-    }
+  .chat-container {
+    width: 95%;
+    margin: 20px auto;
+    border-radius: 28px;
+  }
 
-    .chat-container {
-        width: 95%;
-        margin: 20px auto;
-        padding: 15px;
-    }
+  .chat-header {
+    padding: 24px 24px;
+  }
 
-    .message {
-        max-width: 85%;
-        padding: 10px 15px;
-        font-size: 14px;
-    }
+  h1 {
+    font-size: 30px;
+  }
 
-    #user-input,
-    #bouton {
-        padding: 10px 12px;
-        font-size: 15px;
-    }
+  h1::after {
+    font-size: 24px;
+    right: -60px;
+  }
+
+  #chat-messages {
+    padding: 20px 24px;
+  }
+
+  .message {
+    max-width: 80%;
+    padding: 14px 18px;
+    font-size: 15px;
+  }
+
+  #chat-form {
+    gap: 10px;
+    padding: 20px 24px 28px;
+  }
+
+  #user-input {
+    padding: 14px 18px;
+    font-size: 16px;
+  }
+
+  #bouton {
+    width: 46px;
+    height: 46px;
+  }
+  
+  #bouton::after {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 @media (max-width: 480px) {
-    h1 {
-        font-size: 22px;
-    }
+  .chat-container {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    min-height: 100vh;
+  }
 
-    .chat-container {
-        width: 100%;
-        margin: 0;
-        padding: 10px;
-        border-radius: 0;
-        box-shadow: none;
-    }
+  .chat-header {
+    padding: 20px 20px;
+  }
 
-    .message {
-        max-width: 90%;
-        font-size: 13px;
-        padding: 8px 12px;
-        border-radius: 15px;
-    }
+  h1 {
+    font-size: 26px;
+  }
 
-    #chat-form {
-        flex-direction: column;
-        padding: 8px;
-    }
+  h1::after {
+    font-size: 20px;
+    right: -50px;
+  }
 
-    #user-input {
-        margin-right: 0;
-        margin-bottom: 8px;
-        width: 100%;
-    }
+  #chat-messages {
+    padding: 16px 20px;
+    max-height: calc(100vh - 280px);
+  }
 
-    #bouton {
-        width: 100%;
-    }
+  .message {
+    max-width: 85%;
+    font-size: 15px;
+    padding: 12px 16px;
+    border-radius: 20px;
+  }
+
+  #chat-form {
+    padding: 16px 20px 24px;
+    gap: 10px;
+  }
+
+  #user-input {
+    font-size: 16px;
+    padding: 14px 18px;
+  }
+
+  #bouton {
+    width: 44px;
+    height: 44px;
+  }
+  
+  #bouton::after {
+    width: 17px;
+    height: 17px;
+  }
+
+  .reset-button {
+    margin: 16px 20px 0;
+    font-size: 14px;
+  }
+}
+
+/* =========================
+   Animations supplémentaires
+========================= */
+
+/* Effet de pulsation sur les nouveaux messages */
+@keyframes messagePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(135, 169, 107, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(135, 169, 107, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(135, 169, 107, 0);
+  }
+}
+
+.message.new {
+  animation: 
+    messageSlide 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    messagePulse 1s ease-out 0.5s;
+}
+
+/* Effet de shake sur erreur */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.error {
+  animation: shake 0.5s ease;
+  border-color: #ff6b6b !important;
+}
+
+/* Transition fluide pour tous les éléments interactifs */
+button, input, .message {
+  will-change: transform;
 }

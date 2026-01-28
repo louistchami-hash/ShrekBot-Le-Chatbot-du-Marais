@@ -4,11 +4,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatMessages = document.getElementById("chat-messages");
     const resetChatButton = document.getElementById("reset-chat-button");
     const loaderElement = document.getElementById("loader");
+    const bouton = document.getElementById("bouton");
 
     // Ollama API (compatible toutes versions)
     const OLLAMA_API_URL = "http://localhost:11434/api/generate";
 
     let conversationHistory = [];
+
+    // Animation du bouton quand l'utilisateur tape
+    userInput.addEventListener('input', () => {
+        if (userInput.value.trim().length > 0) {
+            bouton.classList.add('ready');
+        } else {
+            bouton.classList.remove('ready');
+        }
+    });
 
     function appendMessage(sender, text) {
         const messageElement = document.createElement("div");
@@ -27,6 +37,16 @@ document.addEventListener("DOMContentLoaded", function () {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
+    function toggleLoaderVisibility(show) {
+        if (loaderElement) {
+            if (show) {
+                loaderElement.classList.remove("loader-hidden");
+            } else {
+                loaderElement.classList.add("loader-hidden");
+            }
+        }
+    }
+
     chatForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
@@ -35,28 +55,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         appendMessage("User", userMessage);
         userInput.value = "";
+        bouton.classList.remove('ready'); // Retire l'animation après envoi
         userInput.focus();
 
-        function toggleLoaderVisibility(show) {
-            if (loaderElement) {
-                if (show) {
-                    loaderElement.classList.remove("loader-hidden");
-                } else {
-                    loaderElement.classList.add("loader-hidden");
-                }
-            }
-        }
-    
-        /* ... */
         toggleLoaderVisibility(true);
-
-        try {
-            /* ... */
-        } catch (error) {
-             /* ... */
-        } finally {
-             toggleLoaderVisibility(false);
-        }
 
         conversationHistory.push({
             role: "user",
@@ -109,6 +111,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 "Système",
                 "❌ Impossible de contacter Ollama. Vérifie qu'il est lancé."
             );
+        } finally {
+            toggleLoaderVisibility(false);
         }
     });
 
@@ -173,6 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
         conversationHistory = [];
         chatMessages.innerHTML = "";
         userInput.value = "";
+        bouton.classList.remove('ready');
         userInput.focus();
 
         appendMessage(
