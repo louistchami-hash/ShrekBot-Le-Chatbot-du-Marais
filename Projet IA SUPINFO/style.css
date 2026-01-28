@@ -1,131 +1,93 @@
+/* =========================
+   Style global - ShrekAI
+========================= */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333333;
+    font-family: 'Comic Sans MS', Arial, sans-serif; /* pour un style fun */
+    background-color: #e6f5e6; /* vert pastel doux */
+    color: #2d2d2d;
     margin: 0;
     padding: 0;
     line-height: 1.6;
 }
+
+/* =========================
+   Conteneur du chat
+========================= */
 .chat-container {
     width: 80%;
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(145deg, #a8e6a1, #d0f0c0); /* vert funky */
+    border: 2px solid #4caf50;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
+
+/* =========================
+   Formulaire
+========================= */
 #chat-form {
     display: flex;
     margin-top: 20px;
 }
+
 #user-input {
     flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 12px;
+    border: 2px solid #4caf50;
+    border-radius: 8px;
     margin-right: 10px;
     font-size: 16px;
+    background-color: #f0fff0;
 }
+
 #bouton {
-    background-color: #007bff;
+    background-color: #4caf50;
     color: white;
     border: none;
     padding: 10px 15px;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
+    transition: all 0.2s ease;
 }
+
 #bouton:hover {
-    background-color: #0056b3;
-}
-@media (max-width: 768px) {
-  h1 {
-    font-size: 28px;
-  }
-
-  .chat-container {
-    width: 95%;
-    margin: 20px auto;
-    padding: 15px;
-  }
-
-  .message {
-    max-width: 85%;
-    padding: 10px 15px;
-    font-size: 14px;
-  }
-
-  #user-input,
-  #bouton {
-    padding: 10px 12px;
-    font-size: 15px;
-  }
+    background-color: #388e3c;
+    transform: scale(1.05);
 }
 
-@media (max-width: 480px) {
-  h1 {
-    font-size: 22px;
-  }
-
-  .chat-container {
-    width: 100%;
-    margin: 0;
-    padding: 10px;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  .message {
-    max-width: 90%;
-    font-size: 13px;
-    padding: 8px 12px;
-    border-radius: 15px;
-  }
-
-  #chat-form {
-    flex-direction: column;
-    padding: 8px;
-  }
-
-  #user-input {
-    margin-right: 0;
-    margin-bottom: 8px;
-    width: 100%;
-  }
-
-  #bouton {
-    width: 100%;
-  }
-}
+/* =========================
+   Bouton reset
+========================= */
 .reset-button {
-    background-color: var(--reset-button-bg, #f44336);
-    color: var(--reset-button-text, white);
+    background-color: #66bb6a;
+    color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
     margin-bottom: 15px;
-    transition: bacground-color 0.2s ease, transform 0.1s ease;
+    transition: background-color 0.2s ease, transform 0.1s ease;
     align-self: flex-start;
 }
 
 .reset-button:hover {
-    background-color: var(--reset-button-bg-hover, #d32f2f);
-    transform: translateY(-1px);
-}
-.loader-hidden {
-    display: none !important;
+    background-color: #43a047;
+    transform: translateY(-2px);
 }
 
+/* =========================
+   Loader
+========================= */
 #loader {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 15px 0;
-    color: var(--loader-text-color, #777777);
+    color: #388e3c;
     font-style: italic;
     font-size: 14px;
     margin-top: 10px;
@@ -135,7 +97,7 @@ body {
     width: 24px;
     height: 24px;
     border: 3px solid rgba(0, 0, 0, 0.1);
-    border-left-color: var(--spinner-active-color, #007bff);
+    border-left-color: #4caf50;
     border-radius: 50%;
     animation: spinAnimation 0.8s linear infinite;
     margin-right: 10px;
@@ -147,5 +109,68 @@ body {
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+/* =========================
+   Responsivité
+========================= */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 28px;
+    }
+
+    .chat-container {
+        width: 95%;
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .message {
+        max-width: 85%;
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    #user-input,
+    #bouton {
+        padding: 10px 12px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 22px;
+    }
+
+    .chat-container {
+        width: 100%;
+        margin: 0;
+        padding: 10px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .message {
+        max-width: 90%;
+        font-size: 13px;
+        padding: 8px 12px;
+        border-radius: 15px;
+    }
+
+    #chat-form {
+        flex-direction: column;
+        padding: 8px;
+    }
+
+    #user-input {
+        margin-right: 0;
+        margin-bottom: 8px;
+        width: 100%;
+    }
+
+    #bouton {
+        width: 100%;
     }
 }
